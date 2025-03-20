@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JogoDados
 {
-    class JogoDados
+    class JogoDeDados
     {
         static Random random = new Random();
         static int posicaoJogador = 0, posicaoAdversario = 0;
@@ -22,7 +22,9 @@ namespace JogoDados
                 if (posicaoJogador >= chegada) break;
                 TurnoComputador();
             }
-            Console.WriteLine(posicaoJogador >= chegada ? "você venceu" : "você perdeu");
+            Console.WriteLine("________________________________");
+            Console.WriteLine(posicaoJogador >= chegada ? "         você venceu" : "         você perdeu");
+            Console.WriteLine("________________________________");
             Console.ReadLine();
         }
 
