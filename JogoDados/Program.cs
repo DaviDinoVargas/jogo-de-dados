@@ -2,19 +2,14 @@
 
 namespace JogoDados
 {
-    class JogoDeDados
+    class Program
     {
-        static Random random = new Random();
-        static int posicaoJogador, posicaoAdversario;
-        const int chegada = 30;
-
         static void Main(string[] args)
         {
             bool jogarNovamente;
             do
             {
-                
-                ResetarJogo();
+                JogoDados.ResetarJogo();
                 Console.Clear();
                 Console.WriteLine("________________________________");
                 Console.WriteLine("       Inicio do Jogo");
@@ -22,26 +17,20 @@ namespace JogoDados
                 Console.WriteLine("________________________________");
                 Console.ReadLine();
 
-                while (posicaoJogador < chegada && posicaoAdversario < chegada)
+                while (JogoDados.posicaoJogador < 30 && JogoDados.posicaoAdversario < 30)
                 {
                     TurnoJogador();
-                    if (posicaoJogador >= chegada) break;
+                    if (JogoDados.posicaoJogador >= 30) break;
                     TurnoComputador();
                 }
 
                 Console.WriteLine("________________________________");
-                Console.WriteLine(posicaoJogador >= chegada ? "         Você venceu!" : "         Você perdeu!");
+                Console.WriteLine(JogoDados.posicaoJogador >= 30 ? "         Você venceu!" : "         Você perdeu!");
                 Console.WriteLine("________________________________");
 
                 Console.WriteLine("Deseja jogar novamente? (S/N)");
                 jogarNovamente = Console.ReadLine().Trim().ToUpper() == "S";
             } while (jogarNovamente);
-        }
-
-        static void ResetarJogo()
-        {
-            posicaoJogador = 0;
-            posicaoAdversario = 0;
         }
 
         static void TurnoJogador()
@@ -51,15 +40,15 @@ namespace JogoDados
             {
                 turnoExtra = false;
                 Console.WriteLine("________________________________");
-                Console.WriteLine("\nSua vez");
+                Console.WriteLine("Sua vez");
                 Console.ReadLine();
-                int rolagem = RolarDado();
+                int rolagem = JogoDados.RolarDado();
                 Console.WriteLine($"Valor no dado: {rolagem}");
-                NewPosicao(ref posicaoJogador, rolagem);
+                JogoDados.NewPosicao(ref JogoDados.posicaoJogador, rolagem);
 
-                if (posicaoJogador >= chegada)
+                if (JogoDados.posicaoJogador >= 30)
                 {
-                    posicaoJogador = chegada;
+                    JogoDados.posicaoJogador = 30;
                     return;
                 }
 
@@ -77,15 +66,15 @@ namespace JogoDados
             do
             {
                 turnoExtra = false;
-                Console.WriteLine("\nVez do Computador");
-                int rolagem = RolarDado();
+                Console.WriteLine("\nVez do Computador\n");
+                int rolagem = JogoDados.RolarDado();
                 Console.WriteLine($"Valor no dado: {rolagem}");
-                NewPosicao(ref posicaoAdversario, rolagem);
+                JogoDados.NewPosicao(ref JogoDados.posicaoAdversario, rolagem);
                 Console.WriteLine("________________________________");
 
-                if (posicaoAdversario >= chegada)
+                if (JogoDados.posicaoAdversario >= 30)
                 {
-                    posicaoAdversario = chegada;
+                    JogoDados.posicaoAdversario = 30;
                     return;
                 }
 
@@ -95,44 +84,6 @@ namespace JogoDados
                     turnoExtra = true;
                 }
             } while (turnoExtra);
-        }
-
-        static int RolarDado()
-        {
-            return random.Next(1, 7);
-        }
-
-        static void NewPosicao(ref int posicao, int rolagem)
-        {
-            posicao += rolagem;
-
-            if (posicao >= chegada)
-            {
-                posicao = chegada;
-                return;
-            }
-
-            Console.WriteLine($"Posição atual: {posicao}\n");
-
-            bool bonus = false, penalidade = false;
-
-            if (posicao == 5 || posicao == 10 || posicao == 15)
-            {
-                Console.WriteLine("Bônus +3");
-                posicao += 3;
-                bonus = true;
-            }
-            else if (posicao == 7 || posicao == 13 || posicao == 20)
-            {
-                Console.WriteLine("Penalidade -2");
-                posicao -= 2;
-                penalidade = true;
-            }
-
-            if (bonus || penalidade)
-            {
-                Console.WriteLine($"\nNova posição: {posicao}");
-            }
         }
     }
 }
