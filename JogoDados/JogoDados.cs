@@ -5,13 +5,14 @@ namespace JogoDados
     public class JogoDados
     {
         public static Random random = new Random();
-        public static int posicaoJogador, posicaoAdversario;
+        public static int posicaoJogador, posicaoComputador;
         public const int chegada = 30;
+        public const int jogadaExtra = 6;
 
         public static void ResetarJogo()
         {
             posicaoJogador = 0;
-            posicaoAdversario = 0;
+            posicaoComputador = 0;
         }
 
         public static int RolarDado()
@@ -70,7 +71,7 @@ namespace JogoDados
                     return;
                 }
 
-                if (rolagem == 6)
+                if (rolagem == jogadaExtra)
                 {
                     Console.WriteLine("Você ganhou um turno extra!");
                     turnoExtra = true;
@@ -94,13 +95,27 @@ namespace JogoDados
                     posicaoAdversario = chegada;
                     return;
                 }
-
-                if (rolagem == 6)
+                
+                if (rolagem == jogadaExtra)
                 {
                     Console.WriteLine("O Computador ganhou um turno extra!");
                     turnoExtra = true;
                 }
             } while (turnoExtra);
         }
+
+        public static bool DeveContinuar()
+        {
+            return posicaoJogador < chegada && posicaoComputador < chegada;
+        }
+        public static bool JogadorVenceu()
+        {
+            return posicaoJogador >= chegada;
+        }
+        public static bool ComputadorVenceu()
+        {
+            return posicaoComputador >= chegada;
+        }
     }
+
 }

@@ -17,15 +17,17 @@ namespace JogoDados
                 Console.WriteLine("________________________________");
                 Console.ReadLine();
 
-                while (JogoDados.posicaoJogador < 30 && JogoDados.posicaoAdversario < 30)
+                while (JogoDados.DeveContinuar())
                 {
                     TurnoJogador();
-                    if (JogoDados.posicaoJogador >= 30) break;
                     TurnoComputador();
+
+                    if (JogoDados.JogadorVenceu() || JogoDados.ComputadorVenceu()) break;
+                    
                 }
 
                 Console.WriteLine("________________________________");
-                Console.WriteLine(JogoDados.posicaoJogador >= 30 ? "         Você venceu!" : "         Você perdeu!");
+                Console.WriteLine(JogoDados.JogadorVenceu() ? "         Você venceu!" : "         Você perdeu!");
                 Console.WriteLine("________________________________");
 
                 Console.WriteLine("Deseja jogar novamente? (S/N)");
@@ -46,13 +48,13 @@ namespace JogoDados
                 Console.WriteLine($"Valor no dado: {rolagem}");
                 JogoDados.NewPosicao(ref JogoDados.posicaoJogador, rolagem);
 
-                if (JogoDados.posicaoJogador >= 30)
+                if (JogoDados.posicaoJogador >= JogoDados.chegada)
                 {
-                    JogoDados.posicaoJogador = 30;
+                    JogoDados.posicaoJogador = JogoDados.chegada;
                     return;
                 }
 
-                if (rolagem == 6)
+                if (rolagem == JogoDados.jogadaExtra)
                 {
                     Console.WriteLine("Você ganhou um turno extra!");
                     turnoExtra = true;
@@ -69,16 +71,16 @@ namespace JogoDados
                 Console.WriteLine("\nVez do Computador\n");
                 int rolagem = JogoDados.RolarDado();
                 Console.WriteLine($"Valor no dado: {rolagem}");
-                JogoDados.NewPosicao(ref JogoDados.posicaoAdversario, rolagem);
+                JogoDados.NewPosicao(ref JogoDados.posicaoComputador, rolagem);
                 Console.WriteLine("________________________________");
 
-                if (JogoDados.posicaoAdversario >= 30)
+                if (JogoDados.posicaoComputador >= JogoDados.chegada)
                 {
-                    JogoDados.posicaoAdversario = 30;
+                    JogoDados.posicaoComputador = JogoDados.chegada;
                     return;
                 }
 
-                if (rolagem == 6)
+                if (rolagem == JogoDados.jogadaExtra)
                 {
                     Console.WriteLine("O Computador ganhou um turno extra!");
                     turnoExtra = true;
