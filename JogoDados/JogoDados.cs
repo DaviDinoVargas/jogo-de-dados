@@ -5,13 +5,13 @@ namespace JogoDados
     public class JogoDados
     {
         public static Random random = new Random();
-        public static int posicaoJogador, posicaoAdversario;
+        public static int posicaoJogador, posicaoComputador;
         public const int chegada = 30;
 
         public static void ResetarJogo()
         {
             posicaoJogador = 0;
-            posicaoAdversario = 0;
+            posicaoComputador = 0;
         }
 
         public static int RolarDado()
@@ -101,6 +101,20 @@ namespace JogoDados
                     turnoExtra = true;
                 }
             } while (turnoExtra);
+        }
+    
+        public static bool DeveContinuar()
+        {
+            return posicaoJogador < 30 && posicaoComputador < 30;
+        }
+        public static bool JogadorVenceu()
+        {
+            return posicaoJogador >= 30;
+        }
+
+        public static bool ComputadorVenceu()
+        {
+            return posicaoComputador >= 30;
         }
     }
 }
